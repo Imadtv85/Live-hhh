@@ -1,0 +1,27 @@
+name: Live Streaming to Facebook with ffmpeg
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  stream:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+    
+    - name: Set up ffmpeg
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ffmpeg
+
+    - name: Run the live stream
+      run: |
+        m3u8_url="https://live4.beinconnect.us/YallaGoalApp/beINSports1.m3u8"
+        stream_key="FB-560873010017559-0-AbyFI-Ul3YR8rjm5"  # استبدله بمفتاح البث الخاص بك
+        rtmp_url="rtmps://live-api-s.facebook.com:443/rtmp/${stream_key}"
+
+        ffmpeg -i "${m3u8_url}" -c:v libx264 -preset fast -max_muxing_queue_size 1024 -f flv "${rtmp_url}"
