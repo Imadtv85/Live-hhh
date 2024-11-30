@@ -22,7 +22,7 @@ jobs:
           sudo apt update
           sudo apt install -y ffmpeg
 
-      # Process M3U8 Stream and send to Facebook Live RTMP Server
-      - name: Process M3U8 Stream to Facebook Live
+      # Process M3U8 Stream and send to Facebook Live RTMPS Server
+      - name: Process M3U8 Stream to RTMPS
         run: |
-          ffmpeg -i "https://live4.beinconnect.us/YallaGoalApp/beINSports1.m3u8" -c copy -f flv "rtmp://live-api-s.facebook.com:80/rtmp/FB-1295634538294049-0-AbxnM15DLKbKiHlJ"
+          ffmpeg -i "https://live4.beinconnect.us/YallaGoalApp/beINSports1.m3u8" -c copy -f flv "rtmps://live-api-s.facebook.com:443/rtmp/FB-1295634538294049-0-AbxnM15DLKbKiHlJ"
